@@ -20,11 +20,15 @@ windows用户双击 qrtc-win 即可使用
 ## API
 获取连麦token：
 ```
-POST /room/<room_name>/user/<user_id>/token
+POST /room/<RoomName>/user/<UserID>/token
 Host: <localhost>
 ```
+
+> e.g.
+> curl -X POST 127.0.0.1:8080/stream/aaa
+
  
- RoomName: 房间名称。
+RoomName: 房间名称。
 UserID: 请求加入房间的用户ID。
 该API生成权限(perm)为`user`,有效时间为永久的RoomToken
 相关文档：[RoomToken计算](http://developer.qiniu.com/article/pili/sdk/server-rtc-sdk.html#6)
@@ -34,15 +38,24 @@ UserID: 请求加入房间的用户ID。
 
 获取推流地址：
 ```
-POST /stream/<room_name>
+POST /stream/<RoomName>
 Host: <localhost>
-RoomName: 房间名称。
-```
-获取播放地址：
-```
-GET /stream/<room_name>/play
-Host: <localhos>
-RoomName: 房间名称。
 ```
 
+> e.g.
+> curl -X POST 127.0.0.1:8080/stream/haha19/play
+
+RoomName: 房间名称。
+
+
+获取播放地址：
+```
+GET /stream/<RoomName>/play
+Host: <localhos>
+```
+
+> e.g.
+> curl 127.0.0.1:8080/stream/haha19/play
+
+RoomName: 房间名称。
 
