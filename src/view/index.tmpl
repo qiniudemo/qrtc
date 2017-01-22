@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="/bootstrap.min.css">
+
+    <title>{{.title}}</title>
+    <style>
+        .jumbotron {
+            background-color: #fff;
+        }
+    </style>
+
+</head>
+<body>
+    <nav class="navbar navbar-primary" role="navigation">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <a class="navbar-brand" href="/login">重置AK/SK</a>
+                <a class="navbar-brand" href="/stream">设置hub,domain</a>
+            </div>
+        </div>
+    </nav>  
+
+    <div class="jumbotron col-md-8 col-md-offset-2">
+        <div class="container">
+            <h1>{{.title}}</h1>
+            <p>七牛连麦服务端工具</p>
+        </div>
+    </div>
+    <div class="container col-md-8 col-md-offset-2" style="padding:20px 0">
+        <div class="panel panel-info" style="border: 0px;">
+            <div class="panel-body" >
+                <div >
+                    <div class="btn-group col-md-3">
+                        <a href="/create" class="btn btn-primary btn-lg" role="button">Create Room</a>
+                    </div>
+                    <div class="btn-group col-md-3">
+                        <a href="/room" class="btn btn-primary btn-lg" role="button">Check Room</a>
+                    </div>
+                    <div class="btn-group col-md-3">
+                        <a href="/delete" class="btn btn-primary btn-lg" role="button">Delete Room</a>
+                    </div>
+                    <div class="btn-group col-md-3">
+                        <a href="/token" class="btn btn-primary btn-lg" role="button">Generate token</a>
+                    </div>
+                    
+                 </div>
+            </div>
+        </div>
+    
+    
+</body>
+</html>

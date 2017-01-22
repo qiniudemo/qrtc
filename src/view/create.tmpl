@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+	<link rel="stylesheet" href="/bootstrap.min.css">
+    <script src="/jquery.min.js"></script>
+</head>
+
+<body>
+	<nav class="navbar navbar-default" role="navigation">
+  		<div class="container-fluid">
+    		<div class="navbar-header">
+      			<a class="navbar-brand" href="/">HomePage</a>
+    		</div>
+    	</div>
+	</nav>
+
+	<div class="container-fluid">
+		<div class="col-md-8 col-md-offset-2">
+
+			<form role="form" action="/create" method="POST">
+			  	<div class="form-group">
+			    	<label for="owner_id">owner_id</label>
+			    	<input type="text" class="form-control" autocomplete="off" name="owner_id" placeholder="Owner Id">
+			  
+			    	<label for="room_name">room_name</label>
+			    	<input type="text" class="form-control" autocomplete="off" name="room_name" placeholder="Room Name">
+			  
+			    	<label for="user_max">user_max</label>
+			    	<input type="text" class="form-control" autocomplete="off" name="user_max" placeholder="user max">
+			  	</div>
+			  
+			  	<button type="submit" class=" col-md-offset-5 btn-lg btn-primary ">Create</button>
+			</form>
+		</div>	
+	</div>
+	
+
+
+</body>

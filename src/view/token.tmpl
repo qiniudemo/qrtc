@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="/bootstrap.min.css">
+    <script src="/jquery.min.js"></script>
+    <title>{{.title}}</title>
+    <style>
+        body {
+            margin:
+        }
+
+    </style>
+
+</head>
+<body>
+    <nav class="navbar navbar-default" role="navigation">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <a class="navbar-brand" href="/">HomePage</a>
+            </div>
+        </div>
+    </nav>
+    
+
+    <div class="container col-md-8 col-md-offset-2">
+        <div class="panel panel-default">
+            <div class="panel-body">
+                <form  id="token" class="form-signin" accept-charset="utf-8" method="post">
+                <div class=" form-group col-md-12">
+                    <label for="room_name">Room Name</label>
+                    <input type="text" class="form-control" autocomplete="off" name="room_name" placeholder="Room Name">
+                </div>
+                <div class=" form-group col-md-12">
+                    <label for="user_id">User ID</label>
+                    <input type="text" class="form-control" autocomplete="off" name="user_id" placeholder="User ID">
+                </div>
+                <div class=" form-group col-md-12">
+                    <label for="perm">Permission</label>
+                    <input type="text" class="form-control" autocomplete="off" name="perm" placeholder="Permission">
+                </div>
+                <div class=" form-group col-md-12">
+                    <label for="expire_at">Expire Time</label>
+                    <input type="text" class="form-control"  autocomplete="off" name="expire_at" placeholder="Expire Time">
+                </div>
+                <button id="button" type="button" class="col-md-2 col-md-offset-5 btn btn-primary">Submit</button>
+            </form>
+            </div>
+            
+
+
+            <div class="panel-body" >
+                <pre class="col-md-12" style="white-space: pre-line" id="tokenRet"></pre>
+                <textarea class="col-md-12" style="position: fixed;left: -100px;width: 80px; top: -100px; height: 80px" id="tokenRetHide"></textarea>
+                <input class="btn btn-primary col-md-2 col-md-offset-5" type="button" id="copy" value="点击复制" />
+            </div>
+        </div>
+    </div>
+
+     <div  class="col-md-8 col-md-offset-2">
+        <div class="panel panel-default">
+            <table class="table">
+                <caption>Rooms</caption>
+                <thead>
+                    <tr>
+                        <th>Owner ID</th>
+                        <th>Room Name</th>
+                        <th>Max User</th>
+                    </tr>
+                </thead>
+                <tbody id = "rooms"></tbody>
+            </table>
+        </div>
+    </div>
+
+    <script type="text/javascript">
+        $(function(){
+            $("#button").bind('click', function(){
+
+                $.post("/token",$("#token").serialize(),  function(data){
+                    $("#tokenRet").html(data)
+                    $("#tokenRetHide").html(data)
+                })
+            })
+
+            $.get("/rooms",  function(data){
+                obj = JSON.parse(data)
+                for(var i in obj){
+                    $("#rooms").append("<tr>" +
+                                            "<td>" + obj[i]["owner_id"] + "</td>" +
+                                            "<td>" + obj[i]["room_name"] + "</td>" +
+                                            "<td>" + obj[i]["user_max"] + "</td>" +
+                                        "</tr>")
+                }
+            })
+
+
+            function copytoken(){
+                var Url2=document.getElementById("tokenRetHide");
+                Url2.focus()
+                document.execCommand('SelectAll');
+                document.execCommand("Copy"); 
+            }
+
+            $('#copy').bind('click', copytoken)
+
+        })
+
+
+</script>
+
+
+
+</body>
+</html>

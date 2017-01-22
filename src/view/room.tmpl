@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <link rel="stylesheet" href="/bootstrap.min.css">
+    <script src="/jquery.min.js"></script>
+</head>
+
+<body>
+    <nav class="navbar navbar-default" role="navigation">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <a class="navbar-brand" href="/">HomePage</a>
+            </div>
+        </div>
+    </nav>    
+
+
+    <div class="col-md-8 col-md-offset-2">
+        <div class="panel panel-default">
+            <div class="panel-body">
+            <form  id="room_check" class="form-signin" accept-charset="utf-8">
+            <div class=" form-group col-md-12">
+                <label for="room_name">Room Name</label>
+                <input type="text" class="form-control" autocomplete="off" name="room_name" placeholder="Room Name">
+            </div>
+            <button id="button" type="submit" class="col-md-offset-4 col-md-4 btn btn-primary btn-lg">Check</button>
+            </form>
+        </div>
+            
+        </div>
+    </div>
+
+	 <div  class="col-md-8 col-md-offset-2">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">查询结果</h3>
+                    </div>
+                    <div class="panel panel-body">
+                        <table class="table">
+                            <caption>Room</caption>
+                            <thead>
+                                <tr>
+                                    <th>Room Name</th>
+                                    <th>Owner ID</th>
+                                    <th>Max User</th>
+                                    <th>room Status</th>
+                                </tr>
+                            </thead>
+                            <tbody id = "room"></tbody>
+                        </table>
+                    </div>
+                    <div class="panel-body">
+                        <pre>RoomName: 房间名称。
+
+OwnerUserId: 房间的所有者。
+
+RoomStatus: 房间状态，0 刚创建，1 房间正在进行会议，2 房间会议已经结束。
+
+UserMax: 该房间支持的最大会议人数。</pre>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+   
+    <div  class="col-md-8 col-md-offset-2">
+        <div class="panel panel-default">
+            <table class="table">
+                <div class="panel-heading">
+                    <h3 class="panel-title">房间列表</h3>
+                </div>
+                <thead>
+                    <tr>
+                        <th>Room Name</th>
+                        <th>Owner ID</th>
+                        <th>Max User</th>
+                    </tr>
+                </thead>
+                <tbody id = "rooms"></tbody>
+            </table>
+            
+        </div>
+    </div>
+
+    <script type="text/javascript">
+        $(function(){
+            $.get("/rooms",  function(data){
+                obj = JSON.parse(data)
+                for(var i in obj){
+                    $("#rooms").append("<tr>" +
+                                            "<td>" + obj[i]["room_name"] + "</td>" +
+                                            "<td>" + obj[i]["owner_id"] + "</td>" +
+                                            "<td>" + obj[i]["user_max"] + "</td>" +
+                                        "</tr>")
+                }   
+            })
+
+            $("#room_check").submit(function(event) {
+                event.preventDefault()
+                $.post("/room",$("#room_check").serialize(),  function(data){
+                    obj = JSON.parse(data)
+                    $("#room").append("<tr>" +
+                                            "<td>" + obj["room_name"] + "</td>" +
+                                            "<td>" + obj["owner_id"] + "</td>" +
+                                            "<td>" + obj["user_max"] + "</td>" +
+                                            "<td>" + obj["room_status"] + "</td>" +
+                                        "</tr>")
+                })
+            })
+
+            // $("#button").bind('click', function(){
+                
+            // })
+
+        })
+        // $(function(){
+        // })
+</script>
+
+</body>
