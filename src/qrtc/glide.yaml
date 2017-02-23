@@ -1,0 +1,9 @@
+package: qrtc
+import:
+- package: github.com/gin-gonic/gin
+- package: github.com/pili-engineering/pili-sdk-go.v2
+  subpackages:
+  - pili
+- package: github.com/syndtr/goleveldb
+  subpackages:
+  - leveldb

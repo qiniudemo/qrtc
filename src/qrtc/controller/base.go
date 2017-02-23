@@ -5,8 +5,8 @@ import (
 	"log"
 	"os"
 
+	"github.com/pili-engineering/pili-sdk-go.v2/pili"
 	"github.com/syndtr/goleveldb/leveldb"
-	"pili-sdk-go.v2/pili"
 )
 
 type Config struct {
@@ -20,10 +20,10 @@ type StreamManager struct {
 }
 
 var (
-	account       Config
-	Mac           = &pili.MAC{}
-	DB            *leveldb.DB
-	StreamDB      *leveldb.DB
+	account  Config
+	Mac      = &pili.MAC{}
+	DB       *leveldb.DB
+	StreamDB *leveldb.DB
 )
 
 func init() {
@@ -50,8 +50,8 @@ func init() {
 		log.Println("Failed decode configuration" + err.Error())
 		return
 	}
-	
-	StreamDB,err = leveldb.OpenFile("model/stream",nil)
+
+	StreamDB, err = leveldb.OpenFile("model/stream", nil)
 	if err != nil {
 		log.Println("Failed decode configuration" + err.Error())
 		return

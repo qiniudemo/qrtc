@@ -2,11 +2,12 @@ package controller
 
 import (
 	"net/http"
-	
-	"pili-sdk-go.v2/pili"
-	"github.com/gin-gonic/gin"
-	"fmt"
+
 	"encoding/json"
+	"fmt"
+
+	"github.com/gin-gonic/gin"
+	"github.com/pili-engineering/pili-sdk-go.v2/pili"
 )
 
 func GetPublishUrl(c *gin.Context) {
@@ -21,42 +22,40 @@ func PostPublisUrl(c *gin.Context) {
 	hub := c.PostForm("hub")
 
 	stream := StreamManager{
-		StreamDomain:domain,
-		HubName:hub,
+		StreamDomain: domain,
+		HubName:      hub,
 	}
-	
-	str,err := json.Marshal(stream)
-	if err!=nil{
+
+	str, err := json.Marshal(stream)
+	if err != nil {
 		fmt.Println(err)
 	}
-	
-	StreamDB.Put([]byte("stream"),str,nil)
+
+	StreamDB.Put([]byte("stream"), str, nil)
 
 	c.Redirect(http.StatusFound, "/")
 
 }
 
+func GenPubUrl(c *gin.Context) {
 
-func GenPubUrl(c *gin.Context){
-	
-	stream,_ := StreamDB.Get([]byte("stream"),nil)
-	
+	stream, _ := StreamDB.Get([]byte("stream"), nil)
+
 	var strMan StreamManager
-	json.Unmarshal(stream,&strMan)
-	
-	pubDomain := fmt.Sprintf("pili-publish.%s",strMan.StreamDomain)
-	addr := pili.RTMPPublishURL(pubDomain,strMan.HubName,c.Param("room_name"),Mac,43200)
-	c.String(http.StatusOK,"%s",addr)
+	json.Unmarshal(stream, &strMan)
+
+	pubDomain := fmt.Sprintf("pili-publish.%s", strMan.StreamDomain)
+	addr := pili.RTMPPublishURL(pubDomain, strMan.HubName, c.Param("room_name"), Mac, 43200)
+	c.String(http.StatusOK, "%s", addr)
 }
 
+func GenPlayUrl(c *gin.Context) {
+	stream, _ := StreamDB.Get([]byte("stream"), nil)
 
-func GenPlayUrl(c *gin.Context){
-	stream,_ := StreamDB.Get([]byte("stream"),nil)
-	
 	var strMan StreamManager
-	json.Unmarshal(stream,&strMan)
-	
-	playDomain := fmt.Sprintf("pili-live-rtmp.%s",strMan.StreamDomain)
-	addr := pili.RTMPPlayURL(playDomain,strMan.HubName,c.Param("room_name"))
-	c.String(http.StatusOK,"%s",addr)
+	json.Unmarshal(stream, &strMan)
+
+	playDomain := fmt.Sprintf("pili-live-rtmp.%s", strMan.StreamDomain)
+	addr := pili.RTMPPlayURL(playDomain, strMan.HubName, c.Param("room_name"))
+	c.String(http.StatusOK, "%s", addr)
 }

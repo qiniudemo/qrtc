@@ -5,11 +5,11 @@ import (
 	"fmt"
 	"log"
 	"net/http"
-	"strconv"
 	"os"
-	
+	"strconv"
+
 	"github.com/gin-gonic/gin"
-	"pili-sdk-go.v2/pili"
+	"github.com/pili-engineering/pili-sdk-go.v2/pili"
 )
 
 //创建房间
@@ -202,23 +202,23 @@ func PostLogin(c *gin.Context) {
 	Mac.AccessKey = ak
 	Mac.SecretKey = []byte(sk)
 
-	confFile, err := os.OpenFile("conf.json",os.O_WRONLY|os.O_TRUNC|os.O_CREATE,os.ModePerm)
+	confFile, err := os.OpenFile("conf.json", os.O_WRONLY|os.O_TRUNC|os.O_CREATE, os.ModePerm)
 	if err != nil {
 		fmt.Println(err)
 	}
 	defer confFile.Close()
-	data,_ := json.Marshal(auth)
-	_,wErr:=confFile.Write(data)
-	if wErr!=nil{
+	data, _ := json.Marshal(auth)
+	_, wErr := confFile.Write(data)
+	if wErr != nil {
 		fmt.Println(wErr)
 	}
-	
+
 	c.Redirect(http.StatusFound, "/")
 }
 
 func CheckMac() bool {
-	
-	if (len(Mac.SecretKey)+len(Mac.AccessKey)) == 0 {
+
+	if (len(Mac.SecretKey) + len(Mac.AccessKey)) == 0 {
 		return false
 	}
 	return true
